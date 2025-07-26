@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const themeToggleBtn = document.getElementById('themeToggle');
     const themeIcon = document.getElementById('themeIcon');
     const htmlElement = document.documentElement;
+    const bodyElement = document.body; // Reference to the body element
 
     // --- Theme Toggle ---
     // Set currentTheme to 'dark' by default
@@ -265,4 +266,169 @@ document.addEventListener('DOMContentLoaded', function() {
             imageSliderModal.style.display = 'none';
         }
     });
+
+    // --- Dynamic Background Gradient on Mouse Move ---
+    bodyElement.addEventListener('mousemove', (e) => {
+        // Get mouse position relative to the viewport
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+
+        // Calculate percentage for CSS variables
+        const percentX = (mouseX / window.innerWidth) * 100;
+        const percentY = (mouseY / window.innerHeight) * 100;
+
+        // Update CSS custom properties
+        htmlElement.style.setProperty('--mouse-x', `${percentX}%`);
+        htmlElement.style.setProperty('--mouse-y', `${percentY}%`);
+    });
 });
+
+// Enhanced Atmospheric Light Rays + Animated Particles
+(function() {
+  const canvas = document.getElementById('ambient-bg');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let mouse = { x: window.innerWidth/2, y: window.innerHeight/2 };
+  let rayCount = 14;
+  let rayColors = [
+    'rgba(180,200,255,0.13)', // blue
+    'rgba(120,180,255,0.11)', // cyan
+    'rgba(255,220,180,0.10)', // gold
+    'rgba(180,120,255,0.12)', // purple
+    'rgba(255,255,220,0.10)', // warm
+    'rgba(200,255,255,0.09)', // cool
+    'rgba(255,240,200,0.09)'
+  ];
+  let darkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+  function updateDarkMode() {
+    darkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+  }
+  window.addEventListener('storage', updateDarkMode);
+  window.addEventListener('DOMContentLoaded', updateDarkMode);
+  // Animated floating particles (dust motes)
+  const PARTICLE_COUNT = 32;
+  let particles = [];
+  function createParticles() {
+    particles = [];
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      let angle = Math.random() * Math.PI * 2;
+      let radius = 0.2 + Math.random() * 1.2;
+      let speed = 0.1 + Math.random() * 0.25;
+      let color = darkMode ? 'rgba(180,220,255,0.18)' : 'rgba(120,180,255,0.13)';
+      particles.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        r: radius,
+        baseR: radius,
+        color,
+        phase: Math.random()*Math.PI*2
+      });
+    }
+  }
+  createParticles();
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    createParticles();
+  });
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  function animate(t) {
+    updateDarkMode();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Light rays
+    let cx = mouse.x;
+    let cy = mouse.y;
+    let baseAngle = Math.PI/2;
+    let spread = Math.PI/1.3;
+    for (let i = 0; i < rayCount; i++) {
+      let angle = baseAngle + (i - (rayCount-1)/2) * (spread/(rayCount-1));
+      let wave = Math.sin(t/1200 + i*0.7) * 0.18 + Math.cos(t/1800 + i) * 0.09;
+      let a = angle + wave + (mouse.x-canvas.width/2)/canvas.width*0.5;
+      let len = canvas.height * (1.1 + 0.08*Math.sin(t/2000+i));
+      let endX = cx + Math.cos(a) * len;
+      let endY = cy + Math.sin(a) * len;
+      let grad = ctx.createLinearGradient(cx, cy, endX, endY);
+      let col = rayColors[i%rayColors.length];
+      if (darkMode) {
+        col = col.replace('0.1', '0.18').replace('0.09', '0.15').replace('0.11', '0.16').replace('0.12', '0.18').replace('0.13', '0.19');
+      }
+      grad.addColorStop(0, col);
+      grad.addColorStop(0.18, col.replace(/0\.[0-9]+\)/, '0.22)'));
+      grad.addColorStop(0.7, 'rgba(255,255,255,0.01)');
+      grad.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(endX + 120, endY + 120);
+      ctx.lineTo(endX - 120, endY - 120);
+      ctx.closePath();
+      ctx.fillStyle = grad;
+      ctx.filter = 'blur(3.5px)';
+      ctx.fill();
+      ctx.restore();
+    }
+    // Animated particles
+    for (let p of particles) {
+      // Particle attraction to cursor
+      let dx = mouse.x - p.x;
+      let dy = mouse.y - p.y;
+      let dist = Math.sqrt(dx*dx + dy*dy);
+      let attract = Math.max(0, 1 - dist/400);
+      p.vx += dx * 0.00008 * attract;
+      p.vy += dy * 0.00008 * attract;
+      p.x += p.vx;
+      p.y += p.vy;
+      // Gentle shimmer
+      p.r = p.baseR + Math.sin(t/700 + p.phase) * 0.5;
+      // Wrap around
+      if (p.x < 0) p.x = canvas.width;
+      if (p.x > canvas.width) p.x = 0;
+      if (p.y < 0) p.y = canvas.height;
+      if (p.y > canvas.height) p.y = 0;
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.shadowColor = darkMode ? 'rgba(120,200,255,0.25)' : 'rgba(180,200,255,0.18)';
+      ctx.shadowBlur = 16;
+      ctx.globalAlpha = 0.7 + 0.3*Math.sin(t/900 + p.phase);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+      ctx.restore();
+    }
+    // Subtle vignette
+    let vignette = ctx.createRadialGradient(
+      canvas.width/2, canvas.height/2, Math.min(canvas.width,canvas.height)*0.3,
+      canvas.width/2, canvas.height/2, Math.max(canvas.width,canvas.height)*0.7
+    );
+    vignette.addColorStop(0, 'rgba(0,0,0,0)');
+    vignette.addColorStop(1, darkMode ? 'rgba(0,0,0,0.28)' : 'rgba(0,0,0,0.18)');
+    ctx.save();
+    ctx.globalCompositeOperation = 'multiply';
+    ctx.fillStyle = vignette;
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.restore();
+    requestAnimationFrame(animate);
+  }
+  animate(0);
+  canvas.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+  canvas.addEventListener('mouseleave', () => {
+    mouse.x = window.innerWidth/2;
+    mouse.y = window.innerHeight/2;
+  });
+  // Recreate particles on theme change
+  const observer = new MutationObserver(() => {
+    updateDarkMode();
+    createParticles();
+  });
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
