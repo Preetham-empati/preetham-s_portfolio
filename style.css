@@ -400,21 +400,6 @@ body {
 
 .timeline-item:last-child {
     margin-bottom: 0;
-}
-
-.timeline-item::before { /* Circle on the timeline line */
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 10px;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background-color: var(--primary-color);
-    border: 4px solid var(--secondary-color);
-    z-index: 1;
-    transition: background-color var(--transition-speed), border-color var(--transition-speed);
-}
 
 .timeline-item img {
     width: 60px;
