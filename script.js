@@ -633,23 +633,28 @@ const galleryData = {
         title: 'Photography Gallery',
         images: [
             {
-                src: 'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=800&h=600&fit=crop',
-                thumb: 'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=200&h=150&fit=crop',
+                src: 'images/draeing1.jpg',
+                thumb: 'images/draeing1.jpg',
                 alt: 'Landscape Photography'
             },
             {
-                src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop',
-                thumb: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=150&fit=crop',
+                src: 'images/draeing2.jpg',
+                thumb: 'images/draeing2.jpg',
                 alt: 'Mountain Photography'
             },
             {
-                src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop',
-                thumb: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=200&h=150&fit=crop',
+                src: 'images/draeing3.jpg',
+                thumb: 'images/draeing3.jpg',
                 alt: 'Forest Photography'
             },
             {
-                src: 'https://images.unsplash.com/photo-1506194093974-e86101b9c05e?w=800&h=600&fit=crop',
-                thumb: 'https://images.unsplash.com/photo-1506194093974-e86101b9c05e?w=200&h=150&fit=crop',
+                src: 'images/draeing4.jpg',
+                thumb: 'images/draeing4.jpg',
+                alt: 'Sunset Photography'
+            },
+            {
+                src: 'images/draeing5.jpg',
+                thumb: 'images/draeing5.jpg',
                 alt: 'Sunset Photography'
             }
         ]
