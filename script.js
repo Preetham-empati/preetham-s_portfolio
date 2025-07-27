@@ -635,27 +635,22 @@ const galleryData = {
             {
                 src: 'images/draeing1.jpg',
                 thumb: 'images/draeing1.jpg',
-                alt: 'Landscape Photography'
             },
             {
-                src: 'images/draeing2.jpg',
-                thumb: 'images/draeing2.jpg',
-                alt: 'Mountain Photography'
+                src: 'images/drawing2.jpg',
+                thumb: 'images/drawing2.jpg',
             },
             {
-                src: 'images/draeing3.jpg',
-                thumb: 'images/draeing3.jpg',
-                alt: 'Forest Photography'
+                src: 'images/drawing3.jpg',
+                thumb: 'images/drawing3.jpg',
             },
             {
-                src: 'images/draeing4.jpg',
-                thumb: 'images/draeing4.jpg',
-                alt: 'Sunset Photography'
+                src: 'images/drawing4.jpg',
+                thumb: 'images/drawing4.jpg',
             },
             {
                 src: 'images/draeing5.jpg',
                 thumb: 'images/draeing5.jpg',
-                alt: 'Sunset Photography'
             }
         ]
     },
