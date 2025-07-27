@@ -633,8 +633,8 @@ const galleryData = {
         title: 'Photography Gallery',
         images: [
             {
-                src: 'images/draeing1.jpg',
-                thumb: 'images/draeing1.jpg',
+                src: 'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=800&h=600&fit=crop',
+                thumb: 'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=200&h=150&fit=crop',
                 alt: 'Landscape Photography'
             },
             {
@@ -643,21 +643,15 @@ const galleryData = {
                 alt: 'Mountain Photography'
             },
             {
-                src: 'images/drawing2.jpg',
-                thumb: 'images/drawing2.jpg',
+                src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop',
+                thumb: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=200&h=150&fit=crop',
                 alt: 'Forest Photography'
             },
             {
-                src: 'images/drawing4.jpg',
-                thumb: 'images/drawing4.jpg',
+                src: 'https://images.unsplash.com/photo-1506194093974-e86101b9c05e?w=800&h=600&fit=crop',
+                thumb: 'https://images.unsplash.com/photo-1506194093974-e86101b9c05e?w=200&h=150&fit=crop',
                 alt: 'Sunset Photography'
             }
-            {
-                src: 'images/drawing5.jpg',
-                thumb: 'images/drawing5.jpg',
-                alt: 'Sunset Photography'
-            }
-             
         ]
     },
     music: {
