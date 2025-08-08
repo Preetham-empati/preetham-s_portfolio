@@ -1253,7 +1253,7 @@ body {
 }
 
 /* Responsive adjustments for gallery */
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
     .gallery-container {
         max-width: 95vw;
         max-height: 90vh;
